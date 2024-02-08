@@ -1926,3 +1926,28 @@ List<String> allCategories =
     allProducts.map((e) => e['category'].toString()).toSet().toList();
 
 List<Map<String, dynamic>> cartItems = [];
+List<String> ImageList = [
+  'https://images.unsplash.com/photo-1598327105666-5b89351aff97?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c21hcnRwaG9uZXxlbnwwfHwwfHx8MA%3D%3D',
+  'https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg?cs=srgb&dl=pexels-craig-dennis-205421.jpg&fm=jpg',
+  'https://iberchem.com/wp-content/uploads/2020/12/2021-Fine-Fragrance-Trends-Iberchem-1024x683.jpg',
+  'https://media.istockphoto.com/id/1300104968/photo/young-woman-applying-cosmetic-white-cream-on-her-face.jpg?s=612x612&w=0&k=20&c=-ndMyVM4oLbjC1suMfYWVkdMwxh52YeLvpJ4t6k4WRs=',
+  'https://img.freepik.com/free-vector/shopping-basket-with-food-vector-illustration-cart-with-product-buy-supermarket-vector-illustration_1284-47048.jpg',
+  'https://media.designcafe.com/wp-content/uploads/2020/04/23125905/creative-home-decor-ideas.jpg',
+  'https://img.freepik.com/free-vector/home-furniture-set_74855-15461.jpg',
+  'https://assets.myntassets.com/dpr_1.5,q_60,w_400,c_limit,fl_progressive/assets/images/19524874/2022/8/17/0fb689b3-28b4-4f6a-be08-a2ce9dfedcdc1660715206206QOMNBluePrintMandarinCollarTop1.jpg',
+  'https://assets.ajio.com/medias/sys_master/root/20230621/b4fw/64923837d55b7d0c6385f991/-1117Wx1400H-463529623-blue-MODEL.jpg',
+  'https://5.imimg.com/data5/SELLER/Default/2022/8/EX/RX/YV/26198267/4.jpg',
+  'https://assets.ajio.com/medias/sys_master/root/20231205/G3z0/656ed440ddf7791519b1e6e2/-473Wx593H-461119105-blue-MODEL.jpg',
+  'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fmens-shoes&psig=AOvVaw1IhjQfiQhjT-qznjh5K5nT&ust=1707468315931000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCOjnraWtm4QDFQAAAAAdAAAAABAE',
+  'https://5.imimg.com/data5/ANDROID/Default/2021/5/KI/TX/ID/93645587/product-jpeg.jpg',
+  'https://m.media-amazon.com/images/I/71mR1c5l70L._AC_UY350_.jpg',
+  'https://m.media-amazon.com/images/I/81P9uu4P2JL._AC_UY1000_.jpg',
+  'https://i.pinimg.com/474x/0b/57/86/0b5786ad6819102ab9b95bcc27989e92.jpg',
+  'https://t3.ftcdn.net/jpg/01/01/59/12/360_F_101591287_6ovxn0Y45kqqGqM1ZSRYfTzGD0Rlmigj.jpg',
+  'https://img.freepik.com/premium-vector/automotive-car-vector-logo-template_278810-498.jpg',
+  'https://www.royalenfield.com/content/dam/royal-enfield/super-meteor-650/motorcycles/home/motorcycle/super-meteor-650-motorcycle.jpg',
+  'https://cdn.pixabay.com/photo/2017/08/01/22/38/flash-2568381_640.jpg',
+];
+
+List<Map<String, dynamic>> Cart = [];
+List totaltems = [];

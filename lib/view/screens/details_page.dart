@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_e_commerce/utils/product_utils.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
@@ -9,10 +10,17 @@ class DetailPage extends StatefulWidget {
 // modelRoute.of(context) ?.setting.arguments as Map ?) ?? allProduct[0];
 
 class _DetailPageState extends State<DetailPage> {
+  double price = 0;
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    Map data = ModalRoute.of(context)!.settings.arguments as Map;
+    Map<String, dynamic> data =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
@@ -24,6 +32,7 @@ class _DetailPageState extends State<DetailPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: List.generate(
@@ -51,8 +60,9 @@ class _DetailPageState extends State<DetailPage> {
             Container(
               height: size.height * 0.5,
               width: size.width,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey,
@@ -61,9 +71,6 @@ class _DetailPageState extends State<DetailPage> {
                     offset: Offset(0, -2),
                   ),
                 ],
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(40),
-                ),
               ),
               padding: const EdgeInsets.all(20),
               child: Column(
@@ -82,18 +89,38 @@ class _DetailPageState extends State<DetailPage> {
                       fontSize: 17,
                     ),
                   ),
-                  // Text(
-                  //   data["\$ ${'price'.toString()}"],
-                  //   style: const TextStyle(
-                  //     fontSize: 20,
-                  //     fontWeight: FontWeight.bold,
-                  //   ),
-                  // ),
+                  Row(
+                    children: [
+                      Text(
+                        "\$ ${(data['price'].toString())}",
+                        style: const TextStyle(
+                          decoration: TextDecoration.lineThrough,
+                          decorationThickness: 3,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        "    \$${(data['price'] - (data['price'] * data['discountPercentage'] / 100)).toString().split('.')[0]}.${(data['price'] - (data['price'] * data['discountPercentage'] / 100)).toString().split('.')[1][0]}",
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          if (!Cart.contains(data)) {
+            Cart.add(data);
+          }
+        },
+        label: const Text('Add to cart'),
+        icon: const Icon(Icons.add),
       ),
     );
   }

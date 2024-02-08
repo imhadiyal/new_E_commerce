@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:new_e_commerce/utils/product_utils.dart';
+import 'package:new_e_commerce/view/components/category_view.dart';
 
 import '../../utils/route_utils.dart';
 
@@ -11,22 +14,83 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String? selectedCategory;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        leading: Icon(Icons.menu),
         actions: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(10),
           ),
-          Icon(
-            Icons.notifications,
-            size: 25,
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed(MyRoutes.cartPage);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: const Icon(
+                Icons.shopping_cart,
+                size: 25,
+              ),
+            ),
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const UserAccountsDrawerHeader(
+                currentAccountPicture: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    "https://www.nicepng.com/png/full/182-1829287_cammy-lin-ux-designer-circle-picture-profile-girl.png",
+                  ),
+                ),
+                accountName: Text("Darshana Hadiyal"),
+                accountEmail: Text("darshanhadiyal2003@gmail.com"),
+              ),
+              ...allCategories
+                  .map(
+                    (e) => GestureDetector(
+                      onTap: () {
+                        log("CAT: $e");
+                        Navigator.pop(context);
+                        selectedCategory = e;
+                        setState(() {});
+                      },
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                ImageList[allCategories.indexOf(e)]),
+                          ),
+                          Container(
+                            color: Colors.grey,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              e.replaceFirst(
+                                e[0],
+                                e[0].toUpperCase(),
+                              ),
+                              style: const TextStyle(
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ],
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -44,122 +108,30 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
               child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
+                    Visibility(
+                      visible: selectedCategory != null,
+                      child: ActionChip(
+                        onPressed: () {
+                          setState(() {
+                            selectedCategory = null;
+                          });
+                        },
+                        avatar: const Icon(Icons.clear),
+                        label: const Text("Clear filter"),
+                      ),
+                    ),
                     ...allCategories
-                        .map((e) => Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  e.replaceFirst(
-                                    e[0],
-                                    e[0].toUpperCase(),
-                                  ),
-                                  style: const TextStyle(fontSize: 17),
-                                ),
-                                SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    children: [
-                                      ...allProducts
-                                          .map((element) => (element[
-                                                      'category'] ==
-                                                  e)
-                                              ? GestureDetector(
-                                                  onTap: () {
-                                                    Navigator.of(context)
-                                                        .pushNamed(
-                                                            MyRoutes.detailPage,
-                                                            arguments: element);
-                                                  },
-                                                  child: Container(
-                                                    height: size.height * 0.3,
-                                                    width: size.width * 0.5,
-                                                    margin:
-                                                        const EdgeInsets.all(5),
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      color: Colors.white,
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          color: Colors.grey,
-                                                          blurRadius: 3,
-                                                          offset: Offset(3, 3),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    child: Column(
-                                                      children: [
-                                                        Container(
-                                                          height:
-                                                              size.height * 0.2,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            image: DecorationImage(
-                                                                image: NetworkImage(
-                                                                    element[
-                                                                        'thumbnail']),
-                                                                fit: BoxFit
-                                                                    .cover),
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          height:
-                                                              size.height * 0.1,
-                                                          color: Colors.white,
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Text(
-                                                                element[
-                                                                    'title'],
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        16),
-                                                              ),
-                                                              Text(
-                                                                element[
-                                                                    'description'],
-                                                                maxLines: 1,
-                                                                style:
-                                                                    const TextStyle(
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                ),
-                                                              ),
-                                                              Text(
-                                                                element['price']
-                                                                    .toString(),
-                                                                maxLines: 1,
-                                                                style:
-                                                                    const TextStyle(
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                ),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                )
-                                              : Container())
-                                          .toList()
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ))
+                        .map(
+                          (e) => selectedCategory == null
+                              ? CategoryView(category: e, context: context)
+                              : selectedCategory == e
+                                  ? CategoryView(category: e, context: context)
+                                  : Container(),
+                        )
                         .toList(),
                   ],
                 ),
