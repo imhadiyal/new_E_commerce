@@ -30,9 +30,9 @@ class _HomePageState extends State<HomePage> {
             onTap: () {
               Navigator.of(context).pushNamed(MyRoutes.cartPage);
             },
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: const Icon(
+            child: const Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Icon(
                 Icons.shopping_cart,
                 size: 25,
               ),
@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                     "https://www.nicepng.com/png/full/182-1829287_cammy-lin-ux-designer-circle-picture-profile-girl.png",
                   ),
                 ),
-                accountName: Text("Darshana Hadiyal"),
+                accountName: Text("Darshan Hadiyal"),
                 accountEmail: Text("darshanhadiyal2003@gmail.com"),
               ),
               ...allCategories
@@ -101,7 +101,9 @@ class _HomePageState extends State<HomePage> {
               height: size.height * 0.20,
               width: size.width * 10,
               decoration: BoxDecoration(
-                  color: Colors.red, borderRadius: BorderRadius.circular(10)),
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
             SizedBox(
               height: size.height * 0.02,
